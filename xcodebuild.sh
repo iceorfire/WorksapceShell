@@ -2,14 +2,14 @@
 
 #注意：脚本目录和WorkSpace目录在同一个目录
 #工程名字(Target名字)
-Project_Name="Target名字,系统默认等于工程名字"
+Project_Name="MobArtApp"
 #workspace的名字
-Workspace_Name="WorkSpace名字"
+Workspace_Name="MobArtApp"
 #配置环境，Release或者Debug,默认release
-Configuration="Release"
+Configuration="Debug"
 
 #AdHoc版本的Bundle ID
-AdHocBundleID="com.xxxx"
+AdHocBundleID="com.hxx.art.iphone"
 #AppStore版本的Bundle ID
 AppStoreBundleID="com.xxxx"
 #enterprise的Bundle ID
@@ -37,9 +37,9 @@ AppStoreExportOptionsPlist=${AppStoreExportOptionsPlist}
 EnterpriseExportOptionsPlist=${EnterpriseExportOptionsPlist}
 
 echo "~~~~~~~~~~~~选择打包方式(输入序号)~~~~~~~~~~~~~~~"
-echo "		1 adHoc"
-echo "		2 AppStore"
-echo "		3 Enterprise"
+echo "        1 adHoc"
+echo "        2 AppStore"
+echo "        3 Enterprise"
 
 # 读取用户输入并存到变量里
 read parameter
@@ -52,8 +52,14 @@ then
     if [ "$method" = "1" ]
     then
 #adhoc脚本
-xcodebuild -workspace $Workspace_Name.xcworkspace -scheme $Project_Name -configuration $Configuration -archivePath build/$Project_Name-adhoc.xcarchive clean archive build CODE_SIGN_IDENTITY="${ADHOCCODE_SIGN_IDENTITY}" PROVISIONING_PROFILE="${ADHOCPROVISIONING_PROFILE_NAME}" PRODUCT_BUNDLE_IDENTIFIER="${AdHocBundleID}"
-xcodebuild  -exportArchive -archivePath build/$Project_Name-adhoc.xcarchive -exportOptionsPlist ${ADHOCExportOptionsPlist} -exportPath ~/Desktop/$Project_Name-adhoc.ipa
+#xcodebuild -workspace $Workspace_Name.xcworkspace -scheme $Project_Name -configuration $Configuration -archivePath build/$Project_Name-adhoc.xcarchive clean archive build CODE_SIGN_IDENTITY="${ADHOCCODE_SIGN_IDENTITY}" PROVISIONING_PROFILE="${ADHOCPROVISIONING_PROFILE_NAME}" PRODUCT_BUNDLE_IDENTIFIER="${AdHocBundleID}"
+xcodebuild -workspace $Workspace_Name.xcworkspace -scheme $Project_Name -configuration $Configuration -archivePath build/$Project_Name-adhoc.xcarchive clean archive build  PRODUCT_BUNDLE_IDENTIFIER="${AdHocBundleID}"
+xcodebuild  -exportArchive -archivePath build/$Project_Name-adhoc.xcarchive -exportOptionsPlist ${ADHOCExportOptionsPlist} -exportPath ~/bddownloads/$Project_Name-adhoc.ipa
+#xcodebuild  -exportArchive -archivePath build/$Project_Name-adhoc.xcarchive -exportFormat IPA -exportPath ~/Desktop/$Project_Name-adhoc.ipa
+
+#xcodebuild archive -workspace MobArtApp.xcworkspace -scheme $Project_Name -archivePath testApp.xcarchive
+#xcodebuild  -exportArchive -archivePath build/$Project_Name-adhoc.xcarchive -exportPath ~/Desktop/$Project_Name-adhoc.ipa
+#xcodebuild  -exportArchive -archivePath build/$Project_Name-adhoc.xcarchive -exportOptionsPlist "" -exportPath ~/Desktop/$Project_Name-adhoc.ipa
 
     elif [ "$method" = "2" ]
     then
